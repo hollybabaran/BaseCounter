@@ -28,9 +28,21 @@ sub findBcls{
     my $date = shift;
     my %options = ( wanted => \&printBcls,
                     follow => 1,
-                    follow_skip => 2,
-                    dangling_symlinks => \&Dangling );
-    find(\%options, getcwd);
+                    follow_skip => 2
+                    preprocess => \&checkTimestamp);
+    find(\%options, "/oicr/data/archive"); #todo: fix hardcoding
+}
+
+sub checkTimestamp{
+    my @new;
+    foreach entry (@ARGV){
+        my $entry_time = (stat $entry)[9];
+        if ($entry_time gt $mtime){
+            push $entry, @new;
+            print "pushed $entry\n";
+        }
+    }
+    return @new;
 }
 
 sub printBcls{
