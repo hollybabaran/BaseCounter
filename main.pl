@@ -26,7 +26,11 @@ sub usage{
 
 sub findBcls{
     my $date = shift;
-    find(\&printBcls, getcwd);
+    my %options = ( wanted => \&printBcls,
+                    follow => 1,
+                    follow_skip => 2,
+                    dangling_symlinks => \&Dangling );
+    find(\%options, getcwd);
 }
 
 sub printBcls{
@@ -39,5 +43,7 @@ sub printBcls{
 sub sumAndPrint{
     
 }
+
+# /oicr/data/archive/D00353/140103_D00353_0030_AC3A9YACXX/Data/Intensities/BaseCalls/L001/C92.1/test.bcl
 
 
