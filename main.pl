@@ -27,7 +27,7 @@ sub usage{
 sub findBcls{
     my $date = shift;
     my %options = ( wanted => \&printBcls,
-                    follow => 1,
+                    follow => 1, #TODO: follow and preprocess do not work together. Bypass symlinks with /.mounts/labs/prod/archive
                     follow_skip => 2,
                     preprocess => \&checkTimestamp);
     find(\%options, "/oicr/data/archive"); #todo: fix hardcoding
